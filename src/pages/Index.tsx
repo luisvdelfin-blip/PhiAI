@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Check, X, Sparkles, Brain, Zap, Shield, Users, Building, Calendar, Home } from "lucide-react";
+import { Check, ArrowRight, Sparkles, Brain, Eye, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -13,382 +13,331 @@ const Index = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation((prev) => (prev + 0.5) % 360);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4">
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #D4AF37 0%, transparent 50%), 
-                             radial-gradient(circle at 75% 75%, #D4AF37 0%, transparent 50%)`,
-            transform: `translateY(${scrollY * 0.5}px)`
-          }}
-        />
-        
-        <div className="relative z-10 text-center max-w-6xl mx-auto">
-          <div className="mb-8">
-            <Badge className="bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/30 mb-6 px-4 py-2 text-sm font-medium">
-              <Sparkles className="w-4 h-4 mr-2" />
-              A Inteligência Suprema
-            </Badge>
+    <div className="min-h-screen bg-[#0A0A0A] text-[#E5E5E5] overflow-x-hidden relative">
+      {/* Subtle noise texture overlay */}
+      <div 
+        className="fixed inset-0 opacity-[0.015] pointer-events-none z-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0A]/80 border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="text-4xl font-['Playfair_Display'] font-light text-[#C5A059]">φ</div>
+            <span className="text-xl font-['Playfair_Display'] font-light tracking-wider">Phi AI</span>
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
-            <span className="font-['Playfair_Display'] bg-gradient-to-r from-white via-white to-[#D4AF37] bg-clip-text text-transparent">
-              A Inteligência Suprema.
-            </span>
-            <br />
-            <span className="font-['Playfair_Display'] text-[#D4AF37]">
-              Em Perfeita Harmonia.
-            </span>
+          <nav className="hidden md:flex items-center space-x-12">
+            <button 
+              onClick={() => scrollToSection('manifesto')}
+              className="text-sm tracking-wide hover:text-[#C5A059] transition-colors duration-300"
+            >
+              Manifesto
+            </button>
+            <button 
+              onClick={() => scrollToSection('technology')}
+              className="text-sm tracking-wide hover:text-[#C5A059] transition-colors duration-300"
+            >
+              Technology
+            </button>
+            <button 
+              onClick={() => scrollToSection('access')}
+              className="text-sm tracking-wide hover:text-[#C5A059] transition-colors duration-300"
+            >
+              Access
+            </button>
+          </nav>
+
+          <Button 
+            variant="outline" 
+            className="border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 bg-transparent rounded-none px-6 py-2 text-sm tracking-wide font-light"
+          >
+            Member Login
+          </Button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center px-6 pt-24">
+        <div className="relative z-10 text-center max-w-5xl mx-auto">
+          {/* Golden Ratio Spiral */}
+          <div className="mb-16 flex justify-center">
+            <div className="relative w-64 h-64">
+              <svg 
+                viewBox="0 0 200 200" 
+                className="w-full h-full"
+                style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.05s linear' }}
+              >
+                <defs>
+                  <linearGradient id="spiralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#C5A059" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#C5A059" stopOpacity="0.8" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M 100 100 L 100 50 A 50 50 0 0 1 150 100 L 150 150 A 100 100 0 0 1 50 150 L 50 50 A 150 150 0 0 1 200 100"
+                  fill="none"
+                  stroke="url(#spiralGradient)"
+                  strokeWidth="0.5"
+                  opacity="0.6"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-6xl font-['Playfair_Display'] font-light text-[#C5A059] opacity-40">φ</div>
+              </div>
+            </div>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-['Playfair_Display'] font-light mb-8 leading-tight tracking-wide">
+            Intelligence in<br />Perfect Proportion.
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
-            A única plataforma que une GPT-4o, Claude 3.7, Gemini 1.5 Pro e Perplexity 
-            em uma interface privada e segura.
+          <p className="text-base md:text-lg text-[#E5E5E5]/60 mb-12 max-w-3xl mx-auto leading-relaxed tracking-wide font-light">
+            The world's most powerful models unified in a private sanctuary.<br />
+            Claude. GPT-4. Gemini. One interface. Absolute discretion.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              size="lg" 
-              className="bg-[#D4AF37] hover:bg-[#D4AF37]/90 text-black font-semibold px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
-            >
-              Acessar o Chat PhiAI
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/10 px-8 py-4 text-lg rounded-full transition-all duration-300"
-              onClick={() => scrollToSection('ecosystem')}
-            >
-              Conheça Nossas Soluções Verticais
-            </Button>
-          </div>
+          <Button 
+            className="border border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-black bg-transparent rounded-none px-12 py-6 text-sm tracking-widest font-light transition-all duration-500"
+            onClick={() => scrollToSection('access')}
+          >
+            REQUEST ACCESS
+          </Button>
         </div>
       </section>
 
-      {/* The Power Section */}
-      <section className="py-24 px-4 relative">
+      {/* The Power Section - Bento Grid */}
+      <section id="technology" className="py-32 px-6 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-bold mb-6">
-              O Poder da <span className="text-[#D4AF37]">Unificação</span>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-light mb-6 tracking-wide">
+              The Pantheon
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Por que pagar 5 assinaturas? Tenha os modelos mais potentes do mundo no seu bolso.
+            <p className="text-sm text-[#E5E5E5]/50 tracking-widest uppercase">
+              Four Minds. One Consciousness.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Chaos Side */}
-            <Card className="bg-red-900/20 border-red-500/30 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <X className="w-8 h-8 text-red-400 mr-3" />
-                  <h3 className="text-2xl font-bold text-red-400">O Caos das Assinaturas</h3>
+          <div className="grid md:grid-cols-2 gap-px bg-white/5 p-px">
+            {/* Claude Card */}
+            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
+              <CardContent className="p-12">
+                <div className="mb-8">
+                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
+                    <Brain className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
+                  </div>
+                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
+                    Claude 3.7
+                  </h3>
+                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Architect</p>
                 </div>
                 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span>ChatGPT Plus</span>
-                    <span className="text-red-400 font-bold">$20/mês</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Claude Pro</span>
-                    <span className="text-red-400 font-bold">$20/mês</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Gemini Advanced</span>
-                    <span className="text-red-400 font-bold">$20/mês</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Perplexity Pro</span>
-                    <span className="text-red-400 font-bold">$20/mês</span>
-                  </div>
-                  <div className="border-t border-red-500/30 pt-4">
-                    <div className="flex justify-between items-center text-xl font-bold">
-                      <span>Total Mensal:</span>
-                      <span className="text-red-400">~R$ 400/mês</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <p className="text-gray-400 text-sm">
-                  Múltiplas interfaces, dados espalhados, sem integração.
+                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
+                  Reasoning that transcends logic. The mind that builds worlds from words, 
+                  architecting solutions with surgical precision and philosophical depth.
                 </p>
               </CardContent>
             </Card>
 
-            {/* Harmony Side */}
-            <Card className="bg-[#D4AF37]/10 border-[#D4AF37]/30 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <Check className="w-8 h-8 text-[#D4AF37] mr-3" />
-                  <h3 className="text-2xl font-bold text-[#D4AF37]">A Harmonia PhiAI</h3>
+            {/* GPT-4o Card */}
+            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
+              <CardContent className="p-12">
+                <div className="mb-8">
+                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
+                    <Sparkles className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
+                  </div>
+                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
+                    GPT-4o
+                  </h3>
+                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Omniscient</p>
                 </div>
                 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span>GPT-4o + Claude 3.7 + Gemini 1.5 Pro + Perplexity</span>
-                    <span className="text-[#D4AF37] font-bold">Incluído</span>
+                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
+                  Knowledge without boundaries. The oracle that sees patterns invisible to others, 
+                  weaving insights across every domain of human understanding.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Gemini Card */}
+            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
+              <CardContent className="p-12">
+                <div className="mb-8">
+                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
+                    <Zap className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span>Interface Unificada</span>
-                    <span className="text-[#D4AF37] font-bold">Incluído</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Dados Privados & Seguros</span>
-                    <span className="text-[#D4AF37] font-bold">Incluído</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span>Suporte Premium</span>
-                    <span className="text-[#D4AF37] font-bold">Incluído</span>
-                  </div>
-                  <div className="border-t border-[#D4AF37]/30 pt-4">
-                    <div className="flex justify-between items-center text-xl font-bold">
-                      <span>Total Mensal:</span>
-                      <span className="text-[#D4AF37]">R$ 49,90/mês</span>
-                    </div>
-                  </div>
+                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
+                    Gemini 1.5 Pro
+                  </h3>
+                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Synthesizer</p>
                 </div>
                 
-                <Badge className="bg-[#D4AF37] text-black font-bold">
-                  GRÁTIS para clientes empresariais
-                </Badge>
+                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
+                  Context that spans infinity. The mind that holds entire libraries in thought, 
+                  connecting distant ideas with effortless grace.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Perplexity Card */}
+            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
+              <CardContent className="p-12">
+                <div className="mb-8">
+                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
+                    <Eye className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
+                  </div>
+                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
+                    Perplexity
+                  </h3>
+                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Real-Time Eye</p>
+                </div>
+                
+                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
+                  Truth in the present moment. The sentinel that watches the world unfold, 
+                  delivering verified intelligence as reality shapes itself.
+                </p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* The Ecosystem Section */}
-      <section id="ecosystem" className="py-24 px-4 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-bold mb-6">
-              Powered by <span className="text-[#D4AF37]">PhiAI</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Nossas Soluções Especializadas. PhiAI é o motor por trás de sistemas específicos para cada indústria.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Lumière AI */}
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
-              <CardContent className="p-8">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4">
-                    <Sparkles className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-[#D4AF37] transition-colors">
-                    Lumière AI
-                  </h3>
-                  <Badge variant="outline" className="border-pink-500/50 text-pink-400">
-                    Estética & Spas
-                  </Badge>
-                </div>
-                
-                <p className="text-gray-300 mb-6">
-                  Automação de agenda e vendas com elegância. IA especializada para o mercado de beleza e bem-estar.
-                </p>
-                
-                <div className="space-y-2 text-sm text-gray-400">
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Agendamento Inteligente
-                  </div>
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Vendas Automatizadas
-                  </div>
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Atendimento 24/7
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* InmoFlow */}
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
-              <CardContent className="p-8">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-4">
-                    <Building className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-[#D4AF37] transition-colors">
-                    InmoFlow
-                  </h3>
-                  <Badge variant="outline" className="border-blue-500/50 text-blue-400">
-                    Imobiliárias
-                  </Badge>
-                </div>
-                
-                <p className="text-gray-300 mb-6">
-                  Atendimento inteligente para corretores. IA que qualifica leads e agenda visitas automaticamente.
-                </p>
-                
-                <div className="space-y-2 text-sm text-gray-400">
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Qualificação de Leads
-                  </div>
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Agendamento de Visitas
-                  </div>
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    CRM Integrado
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Jota Hub */}
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
-              <CardContent className="p-8">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4">
-                    <Users className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 group-hover:text-[#D4AF37] transition-colors">
-                    Jota Hub
-                  </h3>
-                  <Badge variant="outline" className="border-emerald-500/50 text-emerald-400">
-                    Enterprise
-                  </Badge>
-                </div>
-                
-                <p className="text-gray-300 mb-6">
-                  Gestão corporativa sob medida. Plataforma completa para empresas que buscam excelência operacional.
-                </p>
-                
-                <div className="space-y-2 text-sm text-gray-400">
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Automação de Processos
-                  </div>
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Analytics Avançado
-                  </div>
-                  <div className="flex items-center">
-                    <Check className="w-4 h-4 text-[#D4AF37] mr-2" />
-                    Integração Completa
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* The Philosophy Section */}
-      <section className="py-24 px-4 relative">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-bold mb-6">
-              Perfect Harmony <span className="text-[#D4AF37]">Intelligence</span>
-            </h2>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Nossa metodologia baseada na Proporção Áurea. Não vendemos apenas software. 
-              Criamos sistemas onde a tecnologia potencializa o humano.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-[#D4AF37]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Brain className="w-10 h-10 text-[#D4AF37]" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Inteligência</h3>
-              <p className="text-gray-400">IA que compreende contexto e nuances humanas</p>
+      {/* Manifesto Section */}
+      <section id="manifesto" className="py-32 px-6 relative">
+        <div className="max-w-4xl mx-auto">
+          <div className="border border-white/5 p-16 backdrop-blur-sm bg-[#0A0A0A]/50">
+            <div className="text-center mb-12">
+              <div className="text-5xl font-['Playfair_Display'] font-light text-[#C5A059] mb-4">φ</div>
+              <h2 className="text-3xl md:text-5xl font-['Playfair_Display'] font-light tracking-wide">
+                The Manifesto
+              </h2>
             </div>
             
-            <div className="text-center">
-              <div className="w-20 h-20 bg-[#D4AF37]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-10 h-10 text-[#D4AF37]" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Eficiência</h3>
-              <p className="text-gray-400">Automação que libera tempo para o que importa</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-20 h-20 bg-[#D4AF37]/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-10 h-10 text-[#D4AF37]" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Segurança</h3>
-              <p className="text-gray-400">Privacidade e proteção de dados em primeiro lugar</p>
-            </div>
-          </div>
-
-          <Card className="bg-[#D4AF37]/5 border-[#D4AF37]/20 backdrop-blur-sm max-w-4xl mx-auto">
-            <CardContent className="p-12">
-              <blockquote className="text-2xl md:text-3xl font-['Playfair_Display'] italic text-center leading-relaxed">
-                "A verdadeira inovação acontece quando a matemática encontra a arte, 
-                e o código encontra a alma humana."
-              </blockquote>
-              <p className="text-[#D4AF37] text-center mt-6 font-semibold">
-                — Filosofia PhiAI
+            <div className="space-y-8 text-center">
+              <p className="text-base text-[#E5E5E5]/70 leading-relaxed font-light tracking-wide">
+                In a world drowning in noise, we offer silence.<br />
+                In an age of excess, we practice restraint.
               </p>
+              
+              <p className="text-base text-[#E5E5E5]/70 leading-relaxed font-light tracking-wide">
+                Phi AI is not for everyone.<br />
+                It is for those who understand that true power whispers.
+              </p>
+              
+              <p className="text-base text-[#E5E5E5]/70 leading-relaxed font-light tracking-wide">
+                We unite the world's most sophisticated intelligences<br />
+                in perfect mathematical proportion—the Golden Ratio of AI.
+              </p>
+              
+              <div className="pt-8 border-t border-white/5 mt-12">
+                <p className="text-sm text-[#C5A059] tracking-widest uppercase font-light">
+                  Intelligence. Privacy. Elegance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="access" className="py-32 px-6 relative">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-light mb-6 tracking-wide">
+              The Membership
+            </h2>
+            <p className="text-sm text-[#E5E5E5]/50 tracking-widest uppercase">
+              Private Access
+            </p>
+          </div>
+
+          <Card className="bg-[#0A0A0A]/95 border border-white/10 backdrop-blur-sm rounded-none max-w-2xl mx-auto">
+            <CardContent className="p-16">
+              <div className="text-center mb-12">
+                <div className="mb-6">
+                  <span className="text-5xl font-['Playfair_Display'] font-light text-[#C5A059]">R$ 49,90</span>
+                  <span className="text-sm text-[#E5E5E5]/50 ml-2">/ month</span>
+                </div>
+                <p className="text-xs text-[#E5E5E5]/40 tracking-widest uppercase">
+                  Billed Monthly
+                </p>
+              </div>
+
+              <div className="space-y-6 mb-12">
+                <div className="flex items-start">
+                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
+                  <span className="text-sm text-[#E5E5E5]/70 font-light">Unlimited access to Claude 3.7, GPT-4o, Gemini 1.5 Pro, and Perplexity</span>
+                </div>
+                <div className="flex items-start">
+                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
+                  <span className="text-sm text-[#E5E5E5]/70 font-light">Unified interface with conversation history</span>
+                </div>
+                <div className="flex items-start">
+                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
+                  <span className="text-sm text-[#E5E5E5]/70 font-light">End-to-end encryption and data privacy</span>
+                </div>
+                <div className="flex items-start">
+                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
+                  <span className="text-sm text-[#E5E5E5]/70 font-light">Priority support and early access to new models</span>
+                </div>
+                <div className="flex items-start">
+                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
+                  <span className="text-sm text-[#E5E5E5]/70 font-light">API access for custom integrations</span>
+                </div>
+              </div>
+
+              <div className="border-t border-white/5 pt-8 mb-8">
+                <p className="text-xs text-[#C5A059] text-center tracking-widest uppercase font-light">
+                  Complimentary for Lumière & InmoFlow Partners
+                </p>
+              </div>
+
+              <Button 
+                className="w-full border border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-black bg-transparent rounded-none py-6 text-sm tracking-widest font-light transition-all duration-500"
+              >
+                REQUEST INVITATION
+                <ArrowRight className="ml-2 w-4 h-4" strokeWidth={1} />
+              </Button>
             </CardContent>
           </Card>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-4 border-t border-white/10">
+      <footer className="py-16 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h3 className="text-2xl font-bold text-[#D4AF37] mb-4">PhiAI</h3>
-              <p className="text-gray-400 mb-4">
-                A Inteligência Suprema em Perfeita Harmonia.
-              </p>
-              <p className="text-sm text-gray-500">
-                Parte do Ecossistema Home Office Inteligente.
-              </p>
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+            <div className="flex items-center space-x-2">
+              <div className="text-3xl font-['Playfair_Display'] font-light text-[#C5A059]">φ</div>
+              <span className="text-lg font-['Playfair_Display'] font-light tracking-wider">Phi AI</span>
             </div>
             
-            <div>
-              <h4 className="font-semibold mb-4">Plataforma</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Login</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Chat PhiAI</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">API</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Soluções</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Lumière AI</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">InmoFlow</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Jota Hub</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Suporte</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Documentação</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Suporte</a></li>
-                <li><a href="#" className="hover:text-[#D4AF37] transition-colors">Termos</a></li>
-              </ul>
+            <div className="flex space-x-12 text-xs tracking-widest uppercase text-[#E5E5E5]/40">
+              <a href="#" className="hover:text-[#C5A059] transition-colors duration-300">Privacy</a>
+              <a href="#" className="hover:text-[#C5A059] transition-colors duration-300">Terms</a>
+              <a href="#" className="hover:text-[#C5A059] transition-colors duration-300">Contact</a>
             </div>
           </div>
           
-          <div className="border-t border-white/10 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 PhiAI. Todos os direitos reservados.</p>
+          <div className="mt-12 text-center">
+            <p className="text-xs text-[#E5E5E5]/30 tracking-widest uppercase font-light">
+              © 2024 Phi AI. Intelligence in Perfect Proportion.
+            </p>
           </div>
         </div>
       </footer>
