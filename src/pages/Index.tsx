@@ -1,22 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Check, ArrowRight, Sparkles, Brain, Eye, Zap } from "lucide-react";
+import { Check, ArrowRight, Shield, Zap, Sparkles, MessageSquare, Lock, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Index = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [activeModel, setActiveModel] = useState(0);
+  const models = ["GPT-4o", "Claude 3.7", "Gemini 1.5 Pro", "Perplexity"];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRotation((prev) => (prev + 0.5) % 360);
-    }, 50);
+      setActiveModel((prev) => (prev + 1) % models.length);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -25,318 +19,361 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#E5E5E5] overflow-x-hidden relative">
-      {/* Subtle noise texture overlay */}
-      <div 
-        className="fixed inset-0 opacity-[0.015] pointer-events-none z-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-        }}
-      />
+    <div className="min-h-screen bg-[#0F1117] text-white overflow-x-hidden relative">
+      {/* Animated Background Gradients */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-500/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#0A0A0A]/80 border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="text-4xl font-['Playfair_Display'] font-light text-[#C5A059]">φ</div>
-            <span className="text-xl font-['Playfair_Display'] font-light tracking-wider">Phi AI</span>
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#0F1117]/80 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-[#FCD34D] to-[#3B82F6] rounded-lg flex items-center justify-center">
+              <span className="text-black font-bold text-lg">φ</span>
+            </div>
+            <span className="text-xl font-bold">Phi AI</span>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-12">
+          <nav className="hidden md:flex items-center space-x-8">
             <button 
-              onClick={() => scrollToSection('manifesto')}
-              className="text-sm tracking-wide hover:text-[#C5A059] transition-colors duration-300"
+              onClick={() => scrollToSection('features')}
+              className="text-sm text-gray-400 hover:text-white transition-colors"
             >
-              Manifesto
+              Features
             </button>
             <button 
-              onClick={() => scrollToSection('technology')}
-              className="text-sm tracking-wide hover:text-[#C5A059] transition-colors duration-300"
+              onClick={() => scrollToSection('pricing')}
+              className="text-sm text-gray-400 hover:text-white transition-colors"
             >
-              Technology
+              Pricing
             </button>
             <button 
-              onClick={() => scrollToSection('access')}
-              className="text-sm tracking-wide hover:text-[#C5A059] transition-colors duration-300"
+              onClick={() => scrollToSection('comparison')}
+              className="text-sm text-gray-400 hover:text-white transition-colors"
             >
-              Access
+              Compare
             </button>
           </nav>
 
           <Button 
             variant="outline" 
-            className="border-[#C5A059]/30 text-[#C5A059] hover:bg-[#C5A059]/10 bg-transparent rounded-none px-6 py-2 text-sm tracking-wide font-light"
+            className="border-white/20 text-white hover:bg-white/10 bg-transparent rounded-lg px-6"
           >
-            Member Login
+            Sign In
           </Button>
         </div>
       </header>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-24">
-        <div className="relative z-10 text-center max-w-5xl mx-auto">
-          {/* Golden Ratio Spiral */}
-          <div className="mb-16 flex justify-center">
-            <div className="relative w-64 h-64">
-              <svg 
-                viewBox="0 0 200 200" 
-                className="w-full h-full"
-                style={{ transform: `rotate(${rotation}deg)`, transition: 'transform 0.05s linear' }}
-              >
-                <defs>
-                  <linearGradient id="spiralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#C5A059" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#C5A059" stopOpacity="0.8" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M 100 100 L 100 50 A 50 50 0 0 1 150 100 L 150 150 A 100 100 0 0 1 50 150 L 50 50 A 150 150 0 0 1 200 100"
-                  fill="none"
-                  stroke="url(#spiralGradient)"
-                  strokeWidth="0.5"
-                  opacity="0.6"
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-6xl font-['Playfair_Display'] font-light text-[#C5A059] opacity-40">φ</div>
-              </div>
-            </div>
+        <div className="relative z-10 text-center max-w-6xl mx-auto">
+          <div className="inline-block mb-6 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
+            <span className="text-sm text-gray-300">🚀 Now with Claude 3.7 Sonnet</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-['Playfair_Display'] font-light mb-8 leading-tight tracking-wide">
-            Intelligence in<br />Perfect Proportion.
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
+            The World's Best Models.
+            <br />
+            <span className="bg-gradient-to-r from-[#FCD34D] via-[#3B82F6] to-[#FCD34D] bg-clip-text text-transparent">
+              One Interface.
+            </span>
           </h1>
           
-          <p className="text-base md:text-lg text-[#E5E5E5]/60 mb-12 max-w-3xl mx-auto leading-relaxed tracking-wide font-light">
-            The world's most powerful models unified in a private sanctuary.<br />
-            Claude. GPT-4. Gemini. One interface. Absolute discretion.
+          <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Stop paying $60/mo for each AI. Access Claude 3.7, GPT-4o, Gemini 1.5 Pro, 
+            and Perplexity in a single, private workspace.
           </p>
           
-          <Button 
-            className="border border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-black bg-transparent rounded-none px-12 py-6 text-sm tracking-widest font-light transition-all duration-500"
-            onClick={() => scrollToSection('access')}
-          >
-            REQUEST ACCESS
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            <Button 
+              className="bg-gradient-to-r from-[#FCD34D] to-[#3B82F6] text-black hover:opacity-90 rounded-lg px-8 py-6 text-lg font-semibold shadow-lg shadow-blue-500/50"
+              onClick={() => scrollToSection('pricing')}
+            >
+              Start Chatting Now
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+            <Button 
+              variant="outline"
+              className="border-white/20 text-white hover:bg-white/10 bg-transparent rounded-lg px-8 py-6 text-lg"
+            >
+              View Demo
+            </Button>
+          </div>
+
+          {/* Floating Chat Interface Mockup */}
+          <div className="relative max-w-4xl mx-auto">
+            <div className="relative rounded-2xl border border-white/10 bg-[#1A1D29]/80 backdrop-blur-xl overflow-hidden shadow-2xl shadow-blue-500/20">
+              {/* Model Switcher Animation */}
+              <div className="border-b border-white/10 p-4 flex items-center justify-between bg-[#0F1117]/50">
+                <div className="flex items-center space-x-3">
+                  <MessageSquare className="w-5 h-5 text-[#FCD34D]" />
+                  <span className="text-sm font-medium">Active Model:</span>
+                  <div className="px-3 py-1 rounded-lg bg-gradient-to-r from-[#FCD34D]/20 to-[#3B82F6]/20 border border-white/10">
+                    <span className="font-bold text-[#FCD34D]">{models[activeModel]}</span>
+                  </div>
+                </div>
+                <div className="flex space-x-2">
+                  {models.map((_, idx) => (
+                    <div 
+                      key={idx}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        idx === activeModel ? 'bg-[#FCD34D] w-6' : 'bg-white/20'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+              
+              {/* Chat Preview */}
+              <div className="p-6 space-y-4">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex-shrink-0"></div>
+                  <div className="flex-1 bg-white/5 rounded-lg p-4 border border-white/10">
+                    <p className="text-sm text-gray-300">Explain quantum computing in simple terms</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#FCD34D] to-[#3B82F6] flex-shrink-0"></div>
+                  <div className="flex-1 bg-gradient-to-br from-[#FCD34D]/10 to-[#3B82F6]/10 rounded-lg p-4 border border-white/10">
+                    <p className="text-sm text-gray-300">Quantum computing uses quantum mechanics principles...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* The Power Section - Bento Grid */}
-      <section id="technology" className="py-32 px-6 relative">
+      {/* Comparison Grid (Abacus Style) */}
+      <section id="comparison" className="py-32 px-6 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-light mb-6 tracking-wide">
-              The Pantheon
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-4">
+              Why Choose Phi AI?
             </h2>
-            <p className="text-sm text-[#E5E5E5]/50 tracking-widest uppercase">
-              Four Minds. One Consciousness.
+            <p className="text-xl text-gray-400">
+              One subscription. Unlimited possibilities.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-px bg-white/5 p-px">
-            {/* Claude Card */}
-            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
-              <CardContent className="p-12">
-                <div className="mb-8">
-                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
-                    <Brain className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
-                  </div>
-                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
-                    Claude 3.7
-                  </h3>
-                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Architect</p>
-                </div>
-                
-                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
-                  Reasoning that transcends logic. The mind that builds worlds from words, 
-                  architecting solutions with surgical precision and philosophical depth.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* GPT-4o Card */}
-            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
-              <CardContent className="p-12">
-                <div className="mb-8">
-                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
-                    <Sparkles className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
-                  </div>
-                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
-                    GPT-4o
-                  </h3>
-                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Omniscient</p>
-                </div>
-                
-                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
-                  Knowledge without boundaries. The oracle that sees patterns invisible to others, 
-                  weaving insights across every domain of human understanding.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Gemini Card */}
-            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
-              <CardContent className="p-12">
-                <div className="mb-8">
-                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
-                    <Zap className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
-                  </div>
-                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
-                    Gemini 1.5 Pro
-                  </h3>
-                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Synthesizer</p>
-                </div>
-                
-                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
-                  Context that spans infinity. The mind that holds entire libraries in thought, 
-                  connecting distant ideas with effortless grace.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Perplexity Card */}
-            <Card className="bg-[#0A0A0A]/95 border-white/5 backdrop-blur-sm hover:bg-[#0A0A0A]/80 transition-all duration-700 rounded-none group">
-              <CardContent className="p-12">
-                <div className="mb-8">
-                  <div className="w-12 h-12 border border-[#C5A059]/30 flex items-center justify-center mb-6">
-                    <Eye className="w-6 h-6 text-[#C5A059]" strokeWidth={1} />
-                  </div>
-                  <h3 className="text-2xl font-['Playfair_Display'] font-light mb-3 tracking-wide">
-                    Perplexity
-                  </h3>
-                  <p className="text-xs text-[#C5A059] tracking-widest uppercase mb-6">The Real-Time Eye</p>
-                </div>
-                
-                <p className="text-sm text-[#E5E5E5]/60 leading-relaxed font-light">
-                  Truth in the present moment. The sentinel that watches the world unfold, 
-                  delivering verified intelligence as reality shapes itself.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Manifesto Section */}
-      <section id="manifesto" className="py-32 px-6 relative">
-        <div className="max-w-4xl mx-auto">
-          <div className="border border-white/5 p-16 backdrop-blur-sm bg-[#0A0A0A]/50">
-            <div className="text-center mb-12">
-              <div className="text-5xl font-['Playfair_Display'] font-light text-[#C5A059] mb-4">φ</div>
-              <h2 className="text-3xl md:text-5xl font-['Playfair_Display'] font-light tracking-wide">
-                The Manifesto
-              </h2>
-            </div>
-            
-            <div className="space-y-8 text-center">
-              <p className="text-base text-[#E5E5E5]/70 leading-relaxed font-light tracking-wide">
-                In a world drowning in noise, we offer silence.<br />
-                In an age of excess, we practice restraint.
-              </p>
-              
-              <p className="text-base text-[#E5E5E5]/70 leading-relaxed font-light tracking-wide">
-                Phi AI is not for everyone.<br />
-                It is for those who understand that true power whispers.
-              </p>
-              
-              <p className="text-base text-[#E5E5E5]/70 leading-relaxed font-light tracking-wide">
-                We unite the world's most sophisticated intelligences<br />
-                in perfect mathematical proportion—the Golden Ratio of AI.
-              </p>
-              
-              <div className="pt-8 border-t border-white/5 mt-12">
-                <p className="text-sm text-[#C5A059] tracking-widest uppercase font-light">
-                  Intelligence. Privacy. Elegance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="access" className="py-32 px-6 relative">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-light mb-6 tracking-wide">
-              The Membership
-            </h2>
-            <p className="text-sm text-[#E5E5E5]/50 tracking-widest uppercase">
-              Private Access
-            </p>
-          </div>
-
-          <Card className="bg-[#0A0A0A]/95 border border-white/10 backdrop-blur-sm rounded-none max-w-2xl mx-auto">
-            <CardContent className="p-16">
-              <div className="text-center mb-12">
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Price Card */}
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-[#FCD34D]/50 transition-all duration-300 rounded-2xl group">
+              <CardContent className="p-8">
                 <div className="mb-6">
-                  <span className="text-5xl font-['Playfair_Display'] font-light text-[#C5A059]">R$ 49,90</span>
-                  <span className="text-sm text-[#E5E5E5]/50 ml-2">/ month</span>
+                  <TrendingUp className="w-12 h-12 text-[#FCD34D] mb-4" strokeWidth={1.5} />
+                  <h3 className="text-4xl font-bold mb-2">R$ 49,90</h3>
+                  <p className="text-gray-400">per month</p>
                 </div>
-                <p className="text-xs text-[#E5E5E5]/40 tracking-widest uppercase">
-                  Billed Monthly
-                </p>
-              </div>
+                <div className="pt-6 border-t border-white/10">
+                  <p className="text-sm text-gray-400 mb-2">Compare to:</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">ChatGPT Plus</span>
+                      <span className="line-through text-gray-600">$20/mo</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Claude Pro</span>
+                      <span className="line-through text-gray-600">$20/mo</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-500">Gemini Advanced</span>
+                      <span className="line-through text-gray-600">$20/mo</span>
+                    </div>
+                    <div className="flex justify-between text-sm font-bold pt-2 border-t border-white/10">
+                      <span className="text-[#FCD34D]">Total Savings</span>
+                      <span className="text-[#FCD34D]">~$10/mo</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-              <div className="space-y-6 mb-12">
-                <div className="flex items-start">
-                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
-                  <span className="text-sm text-[#E5E5E5]/70 font-light">Unlimited access to Claude 3.7, GPT-4o, Gemini 1.5 Pro, and Perplexity</span>
+            {/* Models Card */}
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-[#3B82F6]/50 transition-all duration-300 rounded-2xl group">
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <Sparkles className="w-12 h-12 text-[#3B82F6] mb-4" strokeWidth={1.5} />
+                  <h3 className="text-2xl font-bold mb-2">All Premium Models</h3>
+                  <p className="text-gray-400">Unified in one place</p>
                 </div>
-                <div className="flex items-start">
-                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
-                  <span className="text-sm text-[#E5E5E5]/70 font-light">Unified interface with conversation history</span>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold">AI</div>
+                    <div>
+                      <p className="font-semibold text-sm">Claude 3.7 Sonnet</p>
+                      <p className="text-xs text-gray-500">Anthropic</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-xs font-bold">GP</div>
+                    <div>
+                      <p className="font-semibold text-sm">GPT-4o</p>
+                      <p className="text-xs text-gray-500">OpenAI</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-xs font-bold">GM</div>
+                    <div>
+                      <p className="font-semibold text-sm">Gemini 1.5 Pro</p>
+                      <p className="text-xs text-gray-500">Google</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-xs font-bold">PX</div>
+                    <div>
+                      <p className="font-semibold text-sm">Perplexity</p>
+                      <p className="text-xs text-gray-500">Real-time Search</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-start">
-                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
-                  <span className="text-sm text-[#E5E5E5]/70 font-light">End-to-end encryption and data privacy</span>
-                </div>
-                <div className="flex items-start">
-                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
-                  <span className="text-sm text-[#E5E5E5]/70 font-light">Priority support and early access to new models</span>
-                </div>
-                <div className="flex items-start">
-                  <Check className="w-4 h-4 text-[#C5A059] mr-4 mt-1 flex-shrink-0" strokeWidth={1} />
-                  <span className="text-sm text-[#E5E5E5]/70 font-light">API access for custom integrations</span>
-                </div>
-              </div>
+              </CardContent>
+            </Card>
 
-              <div className="border-t border-white/5 pt-8 mb-8">
-                <p className="text-xs text-[#C5A059] text-center tracking-widest uppercase font-light">
-                  Complimentary for Lumière & InmoFlow Partners
-                </p>
-              </div>
+            {/* Privacy Card */}
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-green-500/50 transition-all duration-300 rounded-2xl group">
+              <CardContent className="p-8">
+                <div className="mb-6">
+                  <Shield className="w-12 h-12 text-green-500 mb-4" strokeWidth={1.5} />
+                  <h3 className="text-2xl font-bold mb-2">Zero Data Training</h3>
+                  <p className="text-gray-400">Your privacy guaranteed</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <div>
+                      <p className="text-sm font-medium">End-to-end encryption</p>
+                      <p className="text-xs text-gray-500">Military-grade security</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <div>
+                      <p className="text-sm font-medium">No model training</p>
+                      <p className="text-xs text-gray-500">Your data stays yours</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <div>
+                      <p className="text-sm font-medium">GDPR compliant</p>
+                      <p className="text-xs text-gray-500">European standards</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <div>
+                      <p className="text-sm font-medium">Private workspace</p>
+                      <p className="text-xs text-gray-500">Isolated environment</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
-              <Button 
-                className="w-full border border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-black bg-transparent rounded-none py-6 text-sm tracking-widest font-light transition-all duration-500"
-              >
-                REQUEST INVITATION
-                <ArrowRight className="ml-2 w-4 h-4" strokeWidth={1} />
-              </Button>
-            </CardContent>
-          </Card>
+      {/* Features Section */}
+      <section id="features" className="py-32 px-6 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-4">
+              Built for Power Users
+            </h2>
+            <p className="text-xl text-gray-400">
+              Everything you need to maximize AI productivity
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl">
+              <CardContent className="p-6">
+                <Zap className="w-10 h-10 text-[#FCD34D] mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold mb-2">Instant Switching</h3>
+                <p className="text-sm text-gray-400">Change models mid-conversation without losing context</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl">
+              <CardContent className="p-6">
+                <MessageSquare className="w-10 h-10 text-[#3B82F6] mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold mb-2">Unified History</h3>
+                <p className="text-sm text-gray-400">All conversations in one place, searchable and organized</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl">
+              <CardContent className="p-6">
+                <Lock className="w-10 h-10 text-green-500 mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold mb-2">API Access</h3>
+                <p className="text-sm text-gray-400">Integrate with your tools and workflows</p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 hover:border-white/20 transition-all duration-300 rounded-2xl">
+              <CardContent className="p-6">
+                <Sparkles className="w-10 h-10 text-purple-500 mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg font-bold mb-2">Smart Routing</h3>
+                <p className="text-sm text-gray-400">Auto-select the best model for your task</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing CTA */}
+      <section id="pricing" className="py-32 px-6 relative">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-br from-[#1A1D29] to-[#0F1117] border border-white/10 rounded-3xl p-12 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FCD34D]/10 to-[#3B82F6]/10"></div>
+            <div className="relative z-10">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                Ready to upgrade your AI?
+              </h2>
+              <p className="text-xl text-gray-400 mb-8">
+                Join thousands of professionals using Phi AI
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button 
+                  className="bg-gradient-to-r from-[#FCD34D] to-[#3B82F6] text-black hover:opacity-90 rounded-lg px-12 py-6 text-lg font-semibold shadow-lg shadow-blue-500/50"
+                >
+                  Get Started - R$ 49,90/mo
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </div>
+              <p className="text-sm text-gray-500 mt-6">
+                Complimentary access for Lumière & InmoFlow partners
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-white/5">
+      <footer className="py-12 px-6 border-t border-white/10">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
-            <div className="flex items-center space-x-2">
-              <div className="text-3xl font-['Playfair_Display'] font-light text-[#C5A059]">φ</div>
-              <span className="text-lg font-['Playfair_Display'] font-light tracking-wider">Phi AI</span>
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-[#FCD34D] to-[#3B82F6] rounded-lg flex items-center justify-center">
+                <span className="text-black font-bold text-lg">φ</span>
+              </div>
+              <span className="text-lg font-bold">Phi AI Systems</span>
             </div>
             
-            <div className="flex space-x-12 text-xs tracking-widest uppercase text-[#E5E5E5]/40">
-              <a href="#" className="hover:text-[#C5A059] transition-colors duration-300">Privacy</a>
-              <a href="#" className="hover:text-[#C5A059] transition-colors duration-300">Terms</a>
-              <a href="#" className="hover:text-[#C5A059] transition-colors duration-300">Contact</a>
+            <div className="flex space-x-8 text-sm text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">Privacy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
           
-          <div className="mt-12 text-center">
-            <p className="text-xs text-[#E5E5E5]/30 tracking-widest uppercase font-light">
-              © 2024 Phi AI. Intelligence in Perfect Proportion.
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-500">
+              © 2025 Phi AI Systems. All rights reserved.
             </p>
           </div>
         </div>
