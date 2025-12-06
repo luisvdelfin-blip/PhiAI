@@ -59,6 +59,7 @@ const Index = () => {
           <Button 
             variant="outline" 
             className="border-[#00E1B4] text-[#00E1B4] hover:bg-[#00E1B4]/10 bg-transparent rounded-lg px-6"
+            onClick={() => window.open('https://app.phiai.com.br', '_blank')}
           >
             Entrar
           </Button>
@@ -88,7 +89,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Button 
               className="bg-[#00E1B4] text-black hover:bg-[#00E1B4]/90 rounded-lg px-10 py-6 text-lg font-medium shadow-lg shadow-[#00E1B4]/30"
-              onClick={() => scrollToSection('precos')}
+              onClick={() => window.open('https://app.phiai.com.br', '_blank')}
             >
               Acessar o Ecossistema Phi
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -356,6 +357,7 @@ const Index = () => {
               <div className="mt-12">
                 <Button 
                   className="bg-[#00E1B4] text-black hover:bg-[#00E1B4]/90 rounded-lg px-12 py-6 text-lg font-medium shadow-lg shadow-[#00E1B4]/30"
+                  onClick={() => window.open('https://app.phiai.com.br', '_blank')}
                 >
                   Começar Agora
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -381,7 +383,7 @@ const Index = () => {
             <div className="flex space-x-8 text-sm text-gray-400">
               <a href="#" className="hover:text-[#00E1B4] transition-colors">Privacidade</a>
               <a href="#" className="hover:text-[#00E1B4] transition-colors">Termos</a>
-              <a href="#" className="hover:text-[#00E1B4] transition-colors">Contato</a>
+              <a href="https://app.phiai.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-[#00E1B4] transition-colors">Login</a>
             </div>
           </div>
           
